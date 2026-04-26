@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Confirmed — Dreamshelf</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #050a14;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --accent: #7eb8f7;
+      --accent-glow: rgba(126,184,247,0.25);
+      --text: #e8edf5;
+      --muted: rgba(232,237,245,0.5);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+    }
+
+    .nebula {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.18;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .nebula-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #1a3a6e, transparent 70%);
+      top: -150px; right: -100px;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    .nebula-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #0d2a4a, transparent 70%);
+      bottom: -100px; left: -120px;
+      animation: drift 22s ease-in-out infinite alternate-reverse;
+    }
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.06); }
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      text-align: center;
+      max-width: 420px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem 2.5rem 2.5rem;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 0 0 1px var(--border), 0 32px 64px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(28px);
+      animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+    }
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .icon-wrap {
+      width: 72px; height: 72px;
+      margin: 0 auto 1.75rem;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, rgba(126,184,247,0.2), transparent 70%);
+      border: 1px solid rgba(126,184,247,0.3);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 32px var(--accent-glow);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 32px var(--accent-glow); }
+      50%       { box-shadow: 0 0 52px rgba(126,184,247,0.4); }
+    }
+    .icon-wrap svg {
+      width: 32px; height: 32px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .icon-wrap svg path {
+      stroke-dasharray: 60;
+      stroke-dashoffset: 60;
+      animation: check-draw 0.6s ease 1s forwards;
+    }
+    @keyframes check-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .brand {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+      background: linear-gradient(160deg, #ffffff 30%, var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 2rem;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      text-align: left;
+      background: rgba(126,184,247,0.04);
+      border: 1px solid rgba(126,184,247,0.12);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(126,184,247,0.12);
+      border: 1px solid rgba(126,184,247,0.25);
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+
+    .divider {
+      margin: 0 0 1.25rem;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    .footnote {
+      font-size: 0.78rem;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+
+<div class="page">
+  <div class="card">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 12.5l5 5L20 7"/>
+      </svg>
+    </div>
+
+    <div class="brand">Dreamshelf</div>
+    <h1>You're confirmed.</h1>
+    <p class="subtitle">Your email has been verified. Here's how to get started:</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <span>Close this tab.</span>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <span>Click the <strong style="color:var(--text)">Dreamshelf</strong> icon in your browser toolbar (top right corner).</span>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <span>Sign in with the email and password you just used to register.</span>
+      </div>
+    </div>
+
+    <hr class="divider"/>
+    <p class="footnote">Didn't create an account? You can safely ignore this page.</p>
+  </div>
+</div>
+
+</body>
+</html>
